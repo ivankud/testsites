@@ -13,6 +13,8 @@
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^2.1.3",
+    "react-scrollspy": "^3.4.3",
+    "reactstrap-scrollspy": "^0.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

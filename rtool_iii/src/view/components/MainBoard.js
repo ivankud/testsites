@@ -1,17 +1,23 @@
-import React,{ useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ToolBar from './ToolBar'
 import {Button, textarea} from "react-bootstrap";
 import {saveIcon} from '../../open-iconic-master/svg/file.svg';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { Scrollspy } from 'reactstrap-scrollspy'
 
 function MainBoard() {
     const [s_nameModel, setNameModel]=useState('');
-    const [s_swaggerUrl, setSwaggerUrl]=useState('/');
+    const [s_swaggerUrl, setSwaggerUrl]=useState('http://172.16.50.42:9995/soup/v2/api-docs');
     const [s_textModel, setTextModal]=useState('');
     const [s_showModel, setShowModel]=useState('none');
     const [s_textService, setTextService]=useState('');
     const [s_showService, setShowService]=useState('none');
+    const [s_swaggerTree, setSwaggerTree]=useState();
+    const [s_treeList, setTreeList]=useState();
+    useEffect(()=>{getSwagger(s_swaggerUrl, setSwaggerTree)},[]);
+    useEffect(()=>{s_swaggerTree&&createList(s_swaggerTree, setTreeList,setTextModal)},[s_swaggerTree]);
+    // s_swaggerTree&&createList(s_swaggerTree, setTreeList);
     return (
         <div className="d-flex align-items-stretch bd-highlight example-parent" style={{ height: '1080px', width: '100%' }}>
             <div id='toolbar' className="bd-highlight col-example bg-info"     style={{ width:'20%' }}>
@@ -21,7 +27,7 @@ function MainBoard() {
                 <div>
                     <div className={'d-flex justify-content-center text-center'}><h2>Поле для ввода модели</h2></div>
                 </div>
-                <ToolBar />
+                <ToolBar model={s_textModel}/>
                 <Button
                     onClick={
                         ()=>{
@@ -139,11 +145,41 @@ function MainBoard() {
                 }
             </div>
             <div id='view' className="bd-highlight col-example bg-primary"  style={{ width:'30%' }}>
-                Block3
+                <div className="p-3 w-100">
+                    <div className={'bg-light'} style={{"height": `${1080*0.9}px`, "overflow":"auto"}}>
+                        <div id={'div_for_tree'}>
+                            <ul>
+                                {s_treeList&&s_treeList}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
+
+function createList(json,setTreeList,callBack){
+    console.log('createList',json)
+    var list =
+        json&&Object.keys(json).map((item, i) => (
+            <li key={i} className="list-group-item">
+                <Button onClick={()=>{callBack(json[item])}}>{item}</Button>
+            </li>
+        ));
+    if(json) setTreeList(list);
+}
+
+function getSwagger(url, setSwaggerTree){
+    let stree='<ul>';
+    (async () => {
+        let response = await fetch(url);
+        let jsonSwagger = await response.json();
+        // setSwaggerTree(jsonSwagger['paths']);
+        setSwaggerTree(jsonSwagger['definitions']);
+    })();
+}
+
 
 /* Функция для составления текста для файла модели на основе модели из SWAGGER
 * @params JsonModel - модель в формет json
