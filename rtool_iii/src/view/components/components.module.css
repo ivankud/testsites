@@ -13,3 +13,11 @@
     background-color: #2196F3;
     color: #fff;
 }
+.vl {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 20%;
+    margin-left: -3px;
+    top: 0;
+}
