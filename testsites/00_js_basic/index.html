@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./app.js"></script>
+    <h1>Отгадайте число</h1>
+    <div style="display: inline;">
+        <div ><h1>Осталось попыток : </h1><div id='counter'>22</div></div>
+        <div id="message"></div>
+    </div>
+    <script>document.getElementById('counter').innerHTML=trycount</script>
+    <div>
+        <button onclick="checkNum(0);"
+        >0</button>
+        <button onclick="checkNum(1);">1</button>
+        <button onclick="checkNum(2);">2</button>
+        <button onclick="checkNum(4);">3</button>
+        <button onclick="checkNum(4);">4</button>
+        <button onclick="checkNum(5);">5</button>
+        <button onclick="checkNum(6);">6</button>
+        <button onclick="checkNum(7);">7</button>        
+        <button onclick="checkNum(8);">8</button>
+        <button onclick="checkNum(9);">9</button>
+    </div>
+    <button onclick="reset();">Сбросить</button>
+</body>
+</html>
