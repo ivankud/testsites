@@ -12,6 +12,7 @@
 /build
 /rtool_iii/.idea
 /rtool_iii/node_modules
+/03_js_basic/node_modules
 
 # misc
 .DS_Store
